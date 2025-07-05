@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Color Me! 🎨</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div id="app">
+    <!-- HOME VIEW -->
+    <div id="homeView">
+      <h1 id="gameTitle">Color Me! 🎨</h1>
+      <div id="productGrid">
+        <!-- All 5 product cards -->
+        <div class="productCard" data-product="astronaut">
+          <img src="https://static.wixstatic.com/media/c1e745_163c863286174439bd13dac765a7271f~mv2.png" class="productImage" />
+          <div class="productLabel">🚀 Astronaut</div>
+        </div>
+        <div class="productCard" data-product="unicorn">
+          <img src="https://static.wixstatic.com/media/c1e745_ce44bf60210741e8b20cafcd14951be3~mv2.png" class="productImage" />
+          <div class="productLabel">🦄 Unicorn</div>
+        </div>
+        <div class="productCard" data-product="fairy">
+          <img src="https://static.wixstatic.com/media/c1e745_968026ae14ae41b9879150bbd8c6a749~mv2.png" class="productImage" />
+          <div class="productLabel">🧚 Fairy</div>
+        </div>
+        <div class="productCard" data-product="dinosaur">
+          <img src="https://static.wixstatic.com/media/c1e745_777c7333777347ba8f813401b6a1ec02~mv2.png" class="productImage" />
+          <div class="productLabel">🦖 Dinosaur</div>
+        </div>
+        <div class="productCard" data-product="animals">
+          <img src="https://static.wixstatic.com/media/c1e745_b5f0608fae364a7197aca8f3b0106024~mv2.png" class="productImage" />
+          <div class="productLabel">🦁 Jungle Animals</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- GAME VIEW -->
+    <div id="gameView" style="display: none;">
+      <button id="closeBtn">✖</button>
+      <button id="backBtn">🔙</button>
+
+      <div id="gameContent">
+        <div id="modeButtons">
+          <button id="colorBtn" class="mode active">🎨 Color</button>
+          <button id="washBtn" class="mode">🧽 Wash</button>
+          <a id="shopNowBtn" href="#" target="_blank">🛍️ Shop Now</a>
+        </div>
+
+        <div id="canvasWrapper">
+          <canvas id="bottomCanvas"></canvas>
+          <canvas id="topCanvas"></canvas>
+          <div id="effectsContainer"></div>
+        </div>
+      </div>
+
+      <div id="promptText">Color Me!</div>
+    </div>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
