@@ -49,8 +49,11 @@ const imageData = {
   
   function resizeCanvas() {
     const wrapper = document.getElementById('canvasWrapper');
+    const size = Math.min(wrapper.clientWidth, wrapper.clientHeight * 0.8);
+    
     topCanvas.width = bottomCanvas.width = wrapper.clientWidth;
     topCanvas.height = bottomCanvas.height = wrapper.clientHeight;
+    
     drawImages();
   }
   
@@ -69,11 +72,27 @@ const imageData = {
   
   function getCanvasCoords(e) {
     const rect = topCanvas.getBoundingClientRect();
-    return { x: e.clientX - rect.left, y: e.clientY - rect.top };
+    const scaleX = topCanvas.width / rect.width;
+    const scaleY = topCanvas.height / rect.height;
+    
+    let clientX, clientY;
+    
+    if (e.touches) {
+      clientX = e.touches[0].clientX;
+      clientY = e.touches[0].clientY;
+    } else {
+      clientX = e.clientX;
+      clientY = e.clientY;
+    }
+    
+    return {
+      x: (clientX - rect.left) * scaleX,
+      y: (clientY - rect.top) * scaleY
+    };
   }
   
   function draw(x, y) {
-    const radius = 25;
+    const radius = Math.min(topCanvas.width, topCanvas.height) * 0.05;
   
     if (mode === 'color') {
       topCtx.globalCompositeOperation = 'destination-out';
@@ -104,6 +123,7 @@ const imageData = {
     setTimeout(() => effect.remove(), 800);
   }
   
+  // Touch and mouse events
   topCanvas.addEventListener('pointerdown', (e) => {
     isDrawing = true;
     const { x, y } = getCanvasCoords(e);
@@ -118,6 +138,23 @@ const imageData = {
   
   topCanvas.addEventListener('pointerup', () => isDrawing = false);
   topCanvas.addEventListener('pointerleave', () => isDrawing = false);
+  
+  // Touch events for mobile
+  topCanvas.addEventListener('touchstart', (e) => {
+    e.preventDefault();
+    isDrawing = true;
+    const { x, y } = getCanvasCoords(e);
+    draw(x, y);
+  });
+  
+  topCanvas.addEventListener('touchmove', (e) => {
+    e.preventDefault();
+    if (!isDrawing) return;
+    const { x, y } = getCanvasCoords(e);
+    draw(x, y);
+  });
+  
+  topCanvas.addEventListener('touchend', () => isDrawing = false);
   
   colorBtn.addEventListener('click', () => {
     mode = 'color';
@@ -158,4 +195,7 @@ const imageData = {
   });
   
   window.addEventListener('resize', resizeCanvas);
+  window.addEventListener('orientationchange', resizeCanvas);
   
+  // Initial resize
+  resizeCanvas();
